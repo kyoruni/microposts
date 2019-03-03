@@ -26,5 +26,20 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 // userのindex showは、ログインしていないと見られないようにする
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
+
+    Route::group(['prefix' => 'users/{id}'], function () {
+        // users/{id}/follow
+        Route::post('follow', 'UserFollowController@store')->name('user.follow');
+
+        // users/{id}/delete
+        Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
+
+        // users/{id}/followings
+        Route::get('followings', 'UsersController@followings')->name('users.followings');
+
+        // users/{id}/followers
+        Route::get('followers', 'UsersController@followers')->name('users.followers');
+    });
+
     Route::resource('microposts', 'MicropostsController', ['only' => ['store', 'destroy']]);
 });
