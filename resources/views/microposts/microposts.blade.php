@@ -9,7 +9,17 @@
                 <div>
                     <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                 </div>
-                <div>
+                <div class="d-flex">
+                    @if (Auth::user()->is_favorites($micropost->id))
+                        {!! Form::open(['route' => ['favorites.unfavorite', $micropost->id], 'method' => 'delete']) !!}
+                            {!! Form::submit('Unfavorite', ['class' => "btn btn-outline-success btn-sm mr-2"]) !!}
+                        {!! Form::close() !!}
+                    @else
+                        {!! Form::open(['route' => ['favorites.favorite', $micropost->id]]) !!}
+                            {!! Form::submit('  Favorite  ', ['class' => "btn btn-outline-primary btn-sm mr-2"]) !!}
+                        {!! Form::close() !!}
+                    @endif
+
                     @if (Auth::id() == $micropost->user_id)
                         {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
