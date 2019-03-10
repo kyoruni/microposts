@@ -28,7 +28,28 @@ class UsersController extends Controller
 
         return view('users.show', $data);
     }
+///////////////////////////////////////////////////////////////
+    public function edit($id){
+        $user = User::find($id);
 
+        if (\Auth::id() === $user->id) {
+            return view('users.edit', ['user' => $user,]);
+        }
+        // 編集画面に入れなかった場合はトップページへ
+        return redirect('/');
+    }
+
+    public function update(Request $request, $id){
+        $user = User::find($id);
+
+        if (\Auth::id() == $user->id) {
+            $user->profile = $request->profile;
+            $user->save();
+        }
+
+            return back();
+    }
+///////////////////////////////////////////////////////////////
     public function followings($id){
         $user = User::find($id);
         $followings = $user->followings()->paginate(10);
