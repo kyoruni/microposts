@@ -23,6 +23,11 @@
             {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'put']) !!}
 
                 <div class="form-group mt-2">
+                    {!! Form::label('name', 'ユーザ名', ['class' => 'col-form-label']) !!}
+                    {!! Form::text ('name', null, ['class' => 'form-control']) !!}
+                </div>
+
+                <div class="form-group mt-2">
                     {!! Form::label('profile', 'プロフィール', ['class' => 'col-form-label']) !!}
                     {!! Form::textarea('profile', null, ['class' => 'form-control']) !!}
                 </div>
